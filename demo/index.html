@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Echo Tag Cloud v{%=packageVersions.stable%} Demo (US)</title>
+		<script type="text/javascript" src="//cdn.echoenabled.com/sdk/v3/loader.js"></script>
+	</head>
+<body>
+
+<center><h1>3D view (tag skin)</h1></center>
+<div class="echo-canvas" data-canvas-provider="fastly" data-canvas-id="echo-apps-andrew/c9y6et7tm6#1"></div>
+
+<br>
+
+<center><h1>2D view (block skin)</h1></center>
+<div class="echo-canvas" data-canvas-provider="fastly" data-canvas-id="echo-apps-andrew/c9y6et7tm6#2"></div>
+
+<center><h1>2D view (text-only skin)</h1></center>
+<div class="echo-canvas" data-canvas-provider="fastly" data-canvas-id="echo-apps-andrew/c9y6et7tm6#3"></div>
+
+<script>
+	// TODO: to be updated before pushing to Production 
+	Echo.Loader.override("echo-apps-andrew/c9y6et7tm6#1", "nykr77ytsh", {
+		"targetURL": "http://social-chatter.echoplatform.com/social-source-input/fm703jjma7",
+		"dependencies": {"StreamServer": {"appkey": "echo.echo.streamserver.echo.prod"}}
+	});
+	Echo.Loader.override("echo-apps-andrew/c9y6et7tm6#2", "nykr77ytsh", {
+		"targetURL": "http://social-chatter.echoplatform.com/social-source-input/fm703jjma7",
+		"presentation": {
+			"visualization": "2D",
+			"skin": "block"
+		},
+		"dependencies": {"StreamServer": {"appkey": "echo.echo.streamserver.echo.prod"}}
+	});
+	Echo.Loader.override("echo-apps-andrew/c9y6et7tm6#3", "nykr77ytsh", {
+		"targetURL": "http://social-chatter.echoplatform.com/social-source-input/fm703jjma7",
+		"presentation": {
+			"visualization": "2D",
+			"skin": "text"
+		},
+		"dependencies": {"StreamServer": {"appkey": "echo.echo.streamserver.echo.prod"}}
+	});
+</script>
+
+<script type="text/javascript"> Echo.Loader.init(); </script>
+
+</body>
+</html>

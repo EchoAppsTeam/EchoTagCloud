@@ -259,7 +259,6 @@ tagcloud.methods._requestData = function(handlers) {
 	// automatic sweeping out on Echo.Control level at app destory time
 	this.request = Echo.StreamServer.API.request({
 		"endpoint": "search",
-		"secure": this.config.get("useSecureAPI"),
 		"apiBaseURL": ssConfig.apiBaseURL,
 		"data": {
 			"q": this._assembleQuery(),

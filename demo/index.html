@@ -7,37 +7,45 @@
 <body>
 
 <center><h1>3D view (tag skin)</h1></center>
-<div class="echo-canvas" data-canvas-provider="fastly" data-canvas-id="echo-apps-andrew/c9y6et7tm6#1"></div>
+<div class="echo-canvas" data-canvas-provider="fastly" data-canvas-id="echo/htfp01k1zh#1"></div>
 
 <br>
 
 <center><h1>2D view (block skin)</h1></center>
-<div class="echo-canvas" data-canvas-provider="fastly" data-canvas-id="echo-apps-andrew/c9y6et7tm6#2"></div>
+<div class="echo-canvas" data-canvas-provider="fastly" data-canvas-id="echo/htfp01k1zh#2"></div>
+
+<br>
 
 <center><h1>2D view (text-only skin)</h1></center>
-<div class="echo-canvas" data-canvas-provider="fastly" data-canvas-id="echo-apps-andrew/c9y6et7tm6#3"></div>
+<div class="echo-canvas" data-canvas-provider="fastly" data-canvas-id="echo/htfp01k1zh#3"></div>
+
+<br>
+<br>
+<br>
 
 <script>
-	// TODO: to be updated before pushing to Production 
-	Echo.Loader.override("echo-apps-andrew/c9y6et7tm6#1", "nykr77ytsh", {
-		"targetURL": "http://social-chatter.echoplatform.com/social-source-input/fm703jjma7",
-		"dependencies": {"StreamServer": {"appkey": "echo.echo.streamserver.echo.prod"}}
+	// 3D view (tag skin)
+	Echo.Loader.override("echo/htfp01k1zh#1", "vd4ybvyxgm", {
+		"targetURL": "http://social-chatter.echoplatform.com/social-source-input/fm703jjma7"
 	});
-	Echo.Loader.override("echo-apps-andrew/c9y6et7tm6#2", "nykr77ytsh", {
+
+	// 2D view (block skin)
+	Echo.Loader.override("echo/htfp01k1zh#2", "vd4ybvyxgm", {
 		"targetURL": "http://social-chatter.echoplatform.com/social-source-input/fm703jjma7",
 		"presentation": {
 			"visualization": "2D",
 			"skin": "block"
-		},
-		"dependencies": {"StreamServer": {"appkey": "echo.echo.streamserver.echo.prod"}}
+		}
 	});
-	Echo.Loader.override("echo-apps-andrew/c9y6et7tm6#3", "nykr77ytsh", {
+
+	// 2D view (text-only skin)
+	Echo.Loader.override("echo/htfp01k1zh#3", "vd4ybvyxgm", {
 		"targetURL": "http://social-chatter.echoplatform.com/social-source-input/fm703jjma7",
 		"presentation": {
 			"visualization": "2D",
-			"skin": "text"
-		},
-		"dependencies": {"StreamServer": {"appkey": "echo.echo.streamserver.echo.prod"}}
+			"skin": "text",
+			"textColor": "#000000"
+		}
 	});
 </script>
 

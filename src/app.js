@@ -87,7 +87,7 @@ tagcloud.init = function() {
 		},
 		"onUpdate": function(data) {
 			var tags = app._extractTags(data);
-			$.each(tags, function(id, data) {
+			$.each(tags, function(i, data) {
 				var tag = app.tagById[data.title];
 				if (tag) {
 					tag.count += data.count;
@@ -170,9 +170,9 @@ tagcloud.methods._renderTag = function(tag) {
 	var maxLength = this.config.get("presentation.tagMaxLength");
 	var isTooLong = tag.title.length > maxLength;
 	tag.element = $(this.substitute({
-		"template": '<div class="{class:tag}" {data:hint}>{data:title}</div>',
+		"template": '<div class="{class:tag}"{data:hint}>{data:title}</div>',
 		"data": {
-			"hint": isTooLong ? 'title="' + tag.title + '"' : "",
+			"hint": isTooLong ? ' title="' + tag.title + '"' : "",
 			"title": isTooLong ? tag.title.substr(0, maxLength) + "..." : tag.title
 		}
 	}));
@@ -188,9 +188,9 @@ tagcloud.methods._assembleQuery = function() {
 tagcloud.methods._extractTags = function(data) {
 	if (!data || !data.entries || !data.entries.length) return {};
 	return Echo.Utils.foldl({}, data.entries, function(entry, acc) {
-		var _tags = entry.object.tags;
-		if (_tags && _tags.length) {
-			$.each(_tags, function(id, tag) {
+		var tags = entry.object.tags;
+		if (tags && tags.length) {
+			$.each(tags, function(i, tag) {
 				if (acc[tag]) {
 					acc[tag].count++;
 				} else {
@@ -203,8 +203,8 @@ tagcloud.methods._extractTags = function(data) {
 
 tagcloud.methods._selectPopularTags = function(tags) {
 	var maxTags = this.config.get("presentation.maxTagsCount");
-	var _tags = $.map(tags, function(tag) { return tag; });
-	return _tags.sort(function(a, b) {
+	var tagsArray = $.map(tags, function(tag) { return tag; });
+	return tagsArray.sort(function(a, b) {
 		return b.count > a.count ? 1 : (b.count < a.count ? -1 : 0);
 	}).slice(0, maxTags);
 };
@@ -227,9 +227,9 @@ tagcloud.methods._appendTag = function(tag) {
 	var isFirstTag = this._getNonEmptyTags().length === 0;
 	var target;
 
-	$.each(tags, function(id, _tag) {
-		if (_tag.empty || _tag.count < tag.count) {
-			target = {"id": id, "tag": _tag};
+	$.each(tags, function(i, data) {
+		if (data.empty || data.count < tag.count) {
+			target = {"index": i, "tag": data};
 			return false; // break
 		}
 	});
@@ -237,7 +237,7 @@ tagcloud.methods._appendTag = function(tag) {
 	if (target) {
 		target.tag.visible = false;
 		tag.element = target.tag.element;
-		tags.splice(target.id, 1, tag);
+		tags.splice(target.index, 1, tag);
 		app.set("tags", tags);
 		if (isFirstTag) {
 			// rerender the whole app

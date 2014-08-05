@@ -2,7 +2,7 @@
 	"version": 1,
 	"manifest": {
 		"id": "echo-tag-cloud-staging",
-		"name": "Social Map (Staging)"
+		"name": "Tag Cloud (Staging)"
 	},
 	"appBaseURLs": {
 		"dev": "//echoplatform.com/sandbox/staging/apps/echo/tag-cloud/v{%=packageVersions.stable%}/dev",

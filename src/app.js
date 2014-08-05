@@ -15,12 +15,11 @@ tagcloud.config = {
 	// amount of items to retrieve from StreamServer
 	// 100 is the limitation on the amount of root items
 	"maxItemsToRetrieve": 100,
-	// CSS class specific for this particular instance
-	"uniqueCSSClass": "",
 	// "cloud" lib config handle
 	"cloud": {},
 	"presentation": {
-		"maxWidth": 500,
+		"maxWidth": 500, // in px
+		"minWidth": 250, // in px
 		"maxTagsCount": 15,    // max amount of tags to be displayed
 		"visualization": "3D", // or 2D
 		"skin": "tag",         // or "block", "text"
@@ -72,7 +71,7 @@ tagcloud.init = function() {
 	// attach unique CSS class for this app instance
 	// to target this instance in CSS selectors later
 	var uniqueCSSClass = this.cssPrefix + this.config.get("context");
-	this.config.set("uniqueCSSClass", uniqueCSSClass);
+	this.set("uniqueCSSClass", uniqueCSSClass);
 	app.config.get("target").addClass(uniqueCSSClass);
 
 	app._requestData({
@@ -119,7 +118,7 @@ tagcloud.methods.template = function() {
 };
 
 tagcloud.templates.tags =
-	'<div class="{class:container}">' +
+	'<div class="{class:container} skin-{config:presentation.skin}">' +
 		'<div class="{class:tags}"></div>' +
 		'<div class="echo-clear"></div>' +
 	'</div>';
@@ -136,7 +135,10 @@ tagcloud.renderers.container = function(element) {
 	// to rotate, so we take that into account and reduce max width
 	var margin = presentation.visualization === "3D" ? 100 : 0;
 
-	element.css({"max-width": (parseInt(presentation.maxWidth) - margin) + "px"});
+	// make sure we do not go lower than min width
+	var maxWidth = Math.max(presentation.minWidth, presentation.maxWidth);
+
+	element.css({"max-width": (maxWidth - margin) + "px"});
 	element.addClass(this.cssPrefix + presentation.visualization + "-mode");
 	return element;
 };
@@ -156,6 +158,9 @@ tagcloud.renderers.tags = function(element) {
 		if (this._getNonEmptyTags().length < 5) {
 			config.fog = 0.01;
 		}
+		// make sure that elements that represent tags
+		// are already in the DOM tree, so that the lib
+		// can calculate the necesasry element positions as needed
 		setTimeout(function() {
 			element.cloud($.extend(config, app.config.get("cloud"))).show();
 		}, 0);
@@ -274,27 +279,28 @@ tagcloud.methods._requestData = function(handlers) {
 };
 
 tagcloud.methods._applyDynamicSkinCSS = function() {
-	var skin = this.config.get("presentation.skin");
-	var css = this.substitute({"template": this["_" + skin + "SkinCSS"]()});
+	var css = this.substitute({
+		"template": this._tagSkinCSS() + this._blockSkinCSS() + this._textSkinCSS()
+	});
 	Echo.Utils.addCSS(css, this.config.get("context"));
 };
 
 tagcloud.methods._tagSkinCSS = function() {
-	return '.{config:uniqueCSSClass} .{class:tag} { position: relative; float: left; margin: 5px 8px 5px 18px; height: 36px; line-height: 36px; font-size: 18px; padding: 0 10px 0 18px; background: {config:presentation.backgroundColor}; color: {config:presentation.textColor}; text-decoration: none; -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px; -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; border-top-right-radius: 4px; }' +
-	'.{config:uniqueCSSClass} .{class:tag}:before { content: ""; float: left; position: absolute; top: 0; left: -18px; width: 0; height: 0; border-color: transparent {config:presentation.backgroundColor} transparent transparent; border-style: solid; border-width: 18px 18px 18px 1px; }' +
-	'.{config:uniqueCSSClass} .{class:tag}:after { content: ""; position: absolute; top: 16px; left: 0; float: left; width: 4px; height: 4px; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; background: {config:presentation.textColor}; -moz-box-shadow: -1px -1px 2px {config:presentation.textColor}; -webkit-box-shadow: -1px -1px 2px {config:presentation.textColor}; box-shadow: -1px -1px 2px {config:presentation.textColor}; }' +
-	'.{config:uniqueCSSClass} .{class:tag}:hover { background: {config:presentation.hoverColor}; }' +
-	'.{config:uniqueCSSClass} .{class:tag}:hover:before { border-color: transparent {config:presentation.hoverColor} transparent transparent; }';
+	return '.{self:uniqueCSSClass} .skin-tag .{class:tag} { position: relative; float: left; margin: 5px 8px 5px 18px; height: 36px; line-height: 36px; font-size: 18px; padding: 0 10px 0 18px; background: {config:presentation.backgroundColor}; color: {config:presentation.textColor}; text-decoration: none; -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px; -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; border-top-right-radius: 4px; }' +
+	'.{self:uniqueCSSClass} .skin-tag .{class:tag}:before { content: ""; float: left; position: absolute; top: 0; left: -18px; width: 0; height: 0; border-color: transparent {config:presentation.backgroundColor} transparent transparent; border-style: solid; border-width: 18px 18px 18px 1px; }' +
+	'.{self:uniqueCSSClass} .skin-tag .{class:tag}:after { content: ""; position: absolute; top: 16px; left: 0; float: left; width: 4px; height: 4px; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; background: {config:presentation.textColor}; -moz-box-shadow: -1px -1px 2px {config:presentation.textColor}; -webkit-box-shadow: -1px -1px 2px {config:presentation.textColor}; box-shadow: -1px -1px 2px {config:presentation.textColor}; }' +
+	'.{self:uniqueCSSClass} .skin-tag .{class:tag}:hover { background: {config:presentation.hoverColor}; }' +
+	'.{self:uniqueCSSClass} .skin-tag .{class:tag}:hover:before { border-color: transparent {config:presentation.hoverColor} transparent transparent; }';
 };
 
 tagcloud.methods._blockSkinCSS = function() {
-	return '.{config:uniqueCSSClass} .{class:tag} { float: left; margin: 5px; height: 36px; line-height: 36px; font-size: 18px; padding: 0 18px 0 18px; background: {config:presentation.backgroundColor}; color: {config:presentation.textColor}; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; }' +
-	'.{config:uniqueCSSClass} .{class:tag}:hover { background: {config:presentation.hoverColor}; }';
+	return '.{self:uniqueCSSClass} .skin-block .{class:tag} { float: left; margin: 5px; height: 36px; line-height: 36px; font-size: 18px; padding: 0 18px 0 18px; background: {config:presentation.backgroundColor}; color: {config:presentation.textColor}; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; }' +
+	'.{self:uniqueCSSClass} .skin-block .{class:tag}:hover { background: {config:presentation.hoverColor}; }';
 };
 
 tagcloud.methods._textSkinCSS = function() {
-	return '.{config:uniqueCSSClass} .{class:tag} { float: left; color: {config:presentation.textColor}; margin: 3px 0px; height: 24px; line-height: 24px; font-size: 16px; padding: 0 10px; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; }' +
-	'.{config:uniqueCSSClass} .{class:tag}:hover { background: {config:presentation.hoverColor}; }'; 
+	return '.{self:uniqueCSSClass} .skin-text .{class:tag} { float: left; color: {config:presentation.textColor}; margin: 3px 0px; height: 24px; line-height: 24px; font-size: 16px; padding: 0 10px; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; }' +
+	'.{self:uniqueCSSClass} .skin-text .{class:tag}:hover { background: {config:presentation.hoverColor}; }'; 
 };
 
 tagcloud.css =

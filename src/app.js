@@ -160,7 +160,7 @@ tagcloud.renderers.tags = function(element) {
 		}
 		// make sure that elements that represent tags
 		// are already in the DOM tree, so that the lib
-		// can calculate the necesasry element positions as needed
+		// can calculate the necessary element positions as needed
 		setTimeout(function() {
 			element.cloud($.extend(config, app.config.get("cloud"))).show();
 		}, 0);

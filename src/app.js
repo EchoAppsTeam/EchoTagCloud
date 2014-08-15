@@ -31,12 +31,12 @@ tagcloud.config = {
 	"dependencies": {
 		"StreamServer": {
 			"appkey": undefined,
-			"apiBaseURL": "{%= apiBaseURLs.StreamServer.basic %}",
+			"apiBaseURL": "{%= apiBaseURLs.StreamServer.basic %}/",
 			"liveUpdates": {
 				"transport": "websockets",
 				"enabled": true,
 				"websockets": {
-					"URL": "{%= apiBaseURLs.StreamServer.ws %}"
+					"URL": "{%= apiBaseURLs.StreamServer.ws %}/"
 				}
 			}
 		}

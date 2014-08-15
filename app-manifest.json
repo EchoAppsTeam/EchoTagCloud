@@ -16,12 +16,7 @@
 		"type": "instances",
 		"title": "Instances",
 		"script": "{%=appBaseURLs.prod%}/dashboard.js",
-		"component": "Echo.Apps.TagCloud.Dashboard",
-		"config": {
-			"instanceManager": {
-				"instance": {"useLoadingIcon": true}
-			}
-		}
+		"component": "Echo.Apps.TagCloud.Dashboard"
 	}, {
 		"id": "docs",
 		"type": "external",

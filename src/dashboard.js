@@ -280,7 +280,7 @@ dashboard.methods._displayError = function(message) {
 
 dashboard.methods._assembleTargetURL = function() {
 	return this.get("data.instance.config.targetURL")
-		|| this.get("data.instance.provisioningURL.targetURL");
+		|| this.get("data.instance.provisioningDetails.targetURL");
 };
 
 Echo.AppServer.Dashboard.create(dashboard);

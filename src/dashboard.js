@@ -23,6 +23,10 @@ dashboard.dependencies = [{
 }, {
 	"url": "{config:cdnBaseURL.apps.dataserver}/full.pack.js",
 	"control": "Echo.DataServer.Controls.Pack"
+}, {
+	"url": "//cdn.echoenabled.com/apps/echo/social-map/v1/slider.js"
+}, {
+	"url": "//cdn.echoenabled.com/apps/echo/social-map/v1/colorpicker.js"
 }];
 
 dashboard.config = {
@@ -86,7 +90,7 @@ dashboard.config.ecl = [{
 			}]
 		}
 	}, {
-		"component": "Input",
+		"component": "Colorpicker",
 		"name": "textColor",
 		"type": "string",
 		"default": "#000000",
@@ -95,7 +99,7 @@ dashboard.config.ecl = [{
 			"desc": "Specifies the text color for tags"
 		}
 	}, {
-		"component": "Input",
+		"component": "Colorpicker",
 		"name": "hoverColor",
 		"type": "string",
 		"default": "#C0C0C0",
@@ -104,7 +108,7 @@ dashboard.config.ecl = [{
 			"desc": "Specifies the hover color for tags"
 		}
 	}, {
-		"component": "Input",
+		"component": "Colorpicker",
 		"name": "backgroundColor",
 		"type": "string",
 		"default": "#D8D8D8",
@@ -113,14 +117,17 @@ dashboard.config.ecl = [{
 			"desc": "Specifies the background color for tags"
 		}
 	}, {
-		"component": "Input",
+		"component": "Slider",
 		"name": "maxTagsCount",
 		"type": "number",
 		"default": 15,
 		"config": {
 			"title": "Maximum tag count",
 			"desc": "Specifies maximum amount of tags to be displayed at any given time",
-			"data": {"sample": 15}
+			"min": 5,
+			"max": 30,
+			"step": 1,
+			"unit": "tags"
 		}
 	}, {
 		"component": "Input",
@@ -138,7 +145,8 @@ dashboard.config.ecl = [{
 	"name": "dependencies",
 	"type": "object",
 	"config": {
-		"title": "Dependencies"
+		"title": "Dependencies",
+		"expanded": false
 	},
 	"items": [{
 		"component": "Select",

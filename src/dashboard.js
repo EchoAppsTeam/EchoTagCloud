@@ -176,7 +176,7 @@ dashboard.methods.declareInitialConfig = function() {
 		"targetURL": this.assembleTargetURL(),
 		"dependencies": {
 			"StreamServer": {
-				"appkey": this.getDefaultJanrainApp()
+				"appkey": this.getDefaultAppKey()
 			}
 		}
 	};

@@ -52,7 +52,7 @@ tagcloud.dependencies = [{
 }];
 
 tagcloud.labels = {
-	"noTags": "There are no tags yet.<br>Stay tuned!"
+	"noTags": "No data yet.<br>Stay tuned!"
 };
 
 tagcloud.init = function() {

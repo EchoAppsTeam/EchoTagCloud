@@ -310,8 +310,8 @@ tagcloud.css =
 	'.{class:3D-mode} .{class:tags} { margin-left: -60px; }' +
 	'.{class:tags} { clear: both; width: 100%; }' +
 	'.{class:container} { margin: 0px auto; }' +
-	'.{class:empty} { text-align: center; background-color: #fff; border: 1px solid #d2d2d2; margin: 0 5px 10px 5px; padding: 30px 0; }' +
-	'.{class:empty} .{class:message} { text-align: left; background: url("//cdn.echoenabled.com/apps/echo/conversations/v2/sdk-derived/images/info.png") no-repeat; margin: 0 auto; font-size: 14px; font-family: "Helvetica Neue", Helvetica, "Open Sans", sans-serif; padding-left: 40px; display: inline-block; line-height: 16px; color: #7f7f7f; }' +
+	'.{class:empty} { text-align: center; background-color: #fff; border: 1px solid #d2d2d2; margin: 0px; margin-bottom: 10px; padding: 30px 0; }' +
+	'.{class:empty} .{class:message} { text-align: left; background: url("//cdn.echoenabled.com/apps/echo/conversations/v2/sdk-derived/images/info.png") no-repeat; margin: 0 auto; font-size: 14px; font-family: "Helvetica Neue", Helvetica, "Open Sans", sans-serif; padding-left: 40px; display: inline-block; line-height: 16px; color: #7f7f7f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; box-sizing: border-box; }' +
 	'.{class:tag} { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; font-family: "Helvetica Neue", Helvetica, "Open Sans", sans-serif; }';
 
 Echo.App.create(tagcloud);

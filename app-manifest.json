@@ -1,6 +1,6 @@
 {
-	"id": "{%=manifest.id%}",
-	"name": "{%=manifest.name%}",
+	"id": "echo-tag-cloud",
+	"name": "Tag Cloud",
 	"description": "Uncover and display which words or phrases are surging in popularity.",
 	"app_version": "{%=packageVersions.stable%}",
 	"icon": "{%=appBaseURLs.prod%}/images/icon.png",
